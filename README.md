@@ -166,6 +166,15 @@ npm run build
 
 # Ejecutar versión de producción
 npm start
+
+# Ejecutar pruebas (modo único)
+npm test
+
+# Ejecutar pruebas en watch mode
+npm run test:watch
+
+# Generar reporte de cobertura
+npm run test:coverage
 ```
 
 ### Frontend
@@ -247,6 +256,26 @@ Content-Type: application/json
 GET http://localhost:5000/api/tasks
 Authorization: Bearer <TOKEN>
 ```
+
+## 🧪 Testing Profesional
+
+- **Framework**: Jest + Supertest + MongoDB Memory Server para pruebas de integración.
+- **Cobertura**: `npm run test:coverage` genera reportes en `backend/coverage`.
+- **Casos cubiertos**: Autenticación (registro, login, perfil, protección JWT) y CRUD completo de tareas con validación de permisos.
+
+### Cómo ejecutar localmente
+
+```bash
+cd backend
+npm install
+npm test
+```
+
+## 🔁 Integración Continua (CI/CD)
+
+- **GitHub Actions**: workflow `Backend Tests` ejecuta automáticamente `npm test` en cada `push` y `pull_request` a `main`.
+- **Artefactos**: el reporte de cobertura se adjunta como artefacto para su revisión.
+- **Ramas protegidas**: se recomienda exigir que el workflow pase antes de aprobar un PR, reforzando el proceso descrito en **Flujo de aprobación**.
 
 ## 🐛 Solución de Problemas
 
