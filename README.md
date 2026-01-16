@@ -284,6 +284,10 @@ Las contribuciones son bienvenidas. Para cambios importantes:
 4. Push a la rama (`git push origin feature/AmazingFeature`)
 5. Abre un Pull Request
 
+### ✅ Flujo de aprobación
+
+> Para este proyecto, todos los Pull Requests deben ser revisados y aprobados antes de fusionarse en `main`. Si estás probando tus reglas de seguridad, crea un cambio pequeño, abre el PR y solicita la aprobación correspondiente para validar el flujo.
+
 ## 📄 Licencia
 
 Este proyecto está bajo la licencia MIT.
