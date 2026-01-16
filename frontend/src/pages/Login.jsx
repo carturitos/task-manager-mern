@@ -7,6 +7,7 @@ export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const { login, loading } = useAuth();
   const navigate = useNavigate();
 
@@ -39,13 +40,18 @@ export const Login = () => {
           </div>
           <div className="form-group">
             <label htmlFor="password">Contraseña</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className="password-input-container">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <span className="toggle-password-icon" onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? '🔐' : '👁️'}
+              </span>
+            </div>
           </div>
           <button type="submit" disabled={loading}>
             {loading ? 'Iniciando...' : 'Iniciar Sesión'}

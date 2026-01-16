@@ -116,25 +116,26 @@ task-manager-mern/
 
 ### Autenticación (Usuario)
 
-| Método | Endpoint | Descripción | Autenticación |
-|--------|----------|-------------|---------------|
-| POST | `/api/users/register` | Registrar nuevo usuario | No |
-| POST | `/api/users/login` | Iniciar sesión | No |
-| GET | `/api/users/profile` | Obtener perfil del usuario | ✅ JWT |
+| Método | Endpoint              | Descripción                | Autenticación |
+| ------ | --------------------- | -------------------------- | ------------- |
+| POST   | `/api/users/register` | Registrar nuevo usuario    | No            |
+| POST   | `/api/users/login`    | Iniciar sesión             | No            |
+| GET    | `/api/users/profile`  | Obtener perfil del usuario | ✅ JWT        |
 
 ### Tareas
 
-| Método | Endpoint | Descripción | Autenticación |
-|--------|----------|-------------|---------------|
-| POST | `/api/tasks` | Crear nueva tarea | ✅ JWT |
-| GET | `/api/tasks` | Obtener todas las tareas | ✅ JWT |
-| GET | `/api/tasks/:id` | Obtener tarea por ID | ✅ JWT |
-| PUT | `/api/tasks/:id` | Actualizar tarea | ✅ JWT |
-| DELETE | `/api/tasks/:id` | Eliminar tarea | ✅ JWT |
+| Método | Endpoint         | Descripción              | Autenticación |
+| ------ | ---------------- | ------------------------ | ------------- |
+| POST   | `/api/tasks`     | Crear nueva tarea        | ✅ JWT        |
+| GET    | `/api/tasks`     | Obtener todas las tareas | ✅ JWT        |
+| GET    | `/api/tasks/:id` | Obtener tarea por ID     | ✅ JWT        |
+| PUT    | `/api/tasks/:id` | Actualizar tarea         | ✅ JWT        |
+| DELETE | `/api/tasks/:id` | Eliminar tarea           | ✅ JWT        |
 
 ## 💻 Tecnologías Utilizadas
 
 ### Backend
+
 - **Node.js** - Entorno de ejecución
 - **Express.js** - Framework web
 - **TypeScript** - Lenguaje tipado
@@ -145,6 +146,7 @@ task-manager-mern/
 - **CORS** - Control de acceso
 
 ### Frontend
+
 - **React 18** - Librería de UI
 - **Vite** - Bundler rápido
 - **React Router** - Enrutamiento
@@ -212,6 +214,7 @@ Content-Type: application/json
 ```
 
 **Respuesta:**
+
 ```json
 {
   "message": "Usuario registrado exitosamente",
@@ -253,7 +256,8 @@ Authorization: Bearer <TOKEN>
 
 ### Problema: MongoDB Connection Error
 
-**Solución**: 
+**Solución**:
+
 1. Verifica tu `MONGO_URI` en `.env`
 2. Asegúrate de agregar tu IP a MongoDB Atlas (Network Access)
 3. Verifica que el usuario y contraseña sean correctos

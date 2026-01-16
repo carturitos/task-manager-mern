@@ -8,6 +8,7 @@ export const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const { register, loading } = useAuth();
   const navigate = useNavigate();
 
@@ -50,14 +51,19 @@ export const Register = () => {
           </div>
           <div className="form-group">
             <label htmlFor="password">Contraseña</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength="6"
-            />
+            <div className="password-input-container">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                minLength="6"
+              />
+              <span className="toggle-password-icon" onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? '🔐' : '👁️'}
+              </span>
+            </div>
           </div>
           <button type="submit" disabled={loading}>
             {loading ? 'Registrando...' : 'Registrarse'}
