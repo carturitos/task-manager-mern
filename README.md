@@ -5,12 +5,14 @@ Un aplicativo web de gestión de tareas completo construido con el stack MERN (M
 ## 🚀 Características
 
 - ✅ **Autenticación segura** - Registro e inicio de sesión con JWT y bcrypt
+- ✅ **Recuperación de contraseña** - Sistema de recuperación vía email con tokens seguros
 - ✅ **Gestión de tareas** - CRUD completo (Crear, Leer, Actualizar, Eliminar)
 - ✅ **Rutas protegidas** - Solo usuarios autenticados pueden acceder
 - ✅ **Prioridades** - Tareas con niveles de prioridad (baja, media, alta)
 - ✅ **Marcar completadas** - Marcar tareas como completadas
 - ✅ **TypeScript** - Backend en TypeScript para mayor seguridad de tipos
 - ✅ **Responsive Design** - Diseño adaptable para móvil y desktop
+- ✅ **UI Moderna** - Interfaz con iconos SVG, glassmorphism y animaciones suaves
 
 ## 📋 Requisitos Previos
 
@@ -41,6 +43,9 @@ cat > .env << EOF
 PORT=5000
 MONGO_URI=tu_conexion_mongodb_aqui
 JWT_SECRET=tu_clave_secreta_muy_larga_aqui
+SMTP_EMAIL=tu_email@gmail.com
+SMTP_PASSWORD=tu_app_password_de_gmail
+FRONTEND_URL=http://localhost:5173
 EOF
 
 # Iniciar servidor
@@ -116,11 +121,13 @@ task-manager-mern/
 
 ### Autenticación (Usuario)
 
-| Método | Endpoint              | Descripción                | Autenticación |
-| ------ | --------------------- | -------------------------- | ------------- |
-| POST   | `/api/users/register` | Registrar nuevo usuario    | No            |
-| POST   | `/api/users/login`    | Iniciar sesión             | No            |
-| GET    | `/api/users/profile`  | Obtener perfil del usuario | ✅ JWT        |
+| Método | Endpoint                           | Descripción                      | Autenticación |
+| ------ | ---------------------------------- | -------------------------------- | ------------- |
+| POST   | `/api/users/register`              | Registrar nuevo usuario          | No            |
+| POST   | `/api/users/login`                 | Iniciar sesión                   | No            |
+| GET    | `/api/users/profile`               | Obtener perfil del usuario       | ✅ JWT        |
+| POST   | `/api/users/forgotpassword`        | Solicitar recuperación de contraseña | No        |
+| PUT    | `/api/users/resetpassword/:token`  | Resetear contraseña con token    | No            |
 
 ### Tareas
 

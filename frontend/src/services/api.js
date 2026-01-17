@@ -45,6 +45,16 @@ export const authService = {
     const response = await api.get('/users/profile');
     return response.data;
   },
+
+  forgotPassword: async (email) => {
+    const response = await api.post('/users/forgotpassword', { email });
+    return response.data;
+  },
+
+  resetPassword: async (resettoken, password) => {
+    const response = await api.put(`/users/resetpassword/${resettoken}`, { password });
+    return response.data;
+  },
 };
 
 // Funciones de tareas

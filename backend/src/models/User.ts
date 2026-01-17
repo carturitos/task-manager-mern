@@ -4,6 +4,8 @@ interface IUser extends Document {
   nombre: string;
   email: string;
   password: string;
+  resetPasswordToken?: string;
+  resetPasswordExpire?: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -26,6 +28,14 @@ const userSchema = new Schema<IUser>(
       type: String,
       required: [true, 'Por favor ingresa una contraseña'],
       minlength: 6,
+      select: false,
+    },
+    resetPasswordToken: {
+      type: String,
+      select: false,
+    },
+    resetPasswordExpire: {
+      type: Date,
       select: false,
     },
   },

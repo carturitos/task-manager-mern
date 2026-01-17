@@ -58,6 +58,9 @@ export const Login = () => {
             {loading ? 'Iniciando...' : 'Iniciar Sesión'}
           </button>
         </form>
+        <p className="auth-link">
+          <a href="/forgotpassword">¿Olvidaste tu contraseña?</a>
+        </p>
         <p>
           ¿No tienes cuenta? <a href="/register">Regístrate aquí</a>
         </p>

@@ -118,6 +118,16 @@ button:disabled {
   border-color: #667eea;
 }
 
+.password-group {
+  position: relative;
+}
+
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .toggle-password-icon {
   position: absolute;
   right: 0.75rem;
@@ -139,6 +149,75 @@ button:disabled {
 
 .toggle-password-icon:active {
   transform: translateY(-50%) scale(0.95);
+}
+
+.error-message {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  padding: 0.85rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  border-left: 4px solid #ef4444;
+  line-height: 1.5;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 0.85rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  border-left: 4px solid #28a745;
+  line-height: 1.5;
+}
+
+.auth-subtitle {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.auth-link {
+  text-align: center;
+  margin: 0.75rem 0;
+}
+
+.auth-link a {
+  color: #667eea;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+.auth-link a:hover {
+  text-decoration: underline;
+  color: #5568d3;
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.auth-footer a {
+  color: #667eea;
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: all 0.2s;
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+  color: #5568d3;
 }
 
 @media (max-width: 480px) {
