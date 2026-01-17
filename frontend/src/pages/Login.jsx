@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../styles/Auth.css';
+import { EyeIcon, EyeOffIcon } from '../components/Icons';
 
 export const Login = () => {
   const [email, setEmail] = useState('');
@@ -49,7 +50,7 @@ export const Login = () => {
                 required
               />
               <span className="toggle-password-icon" onClick={() => setShowPassword(!showPassword)}>
-                {showPassword ? '🔐' : '👁️'}
+                {showPassword ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
               </span>
             </div>
           </div>
