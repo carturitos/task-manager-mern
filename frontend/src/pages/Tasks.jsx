@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { taskService } from '../services/api';
+import { PlusIcon, TrashIcon, LogOutIcon, CheckCircleIcon, XCircleIcon } from '../components/Icons';
 import '../styles/Tasks.css';
 
 export const Tasks = () => {
@@ -68,75 +69,91 @@ export const Tasks = () => {
   return (
     <div className="tasks-container">
       <div className="header">
-        <h1>Mis Tareas</h1>
-        <div className="user-info">
-          <span>Hola, {user?.nombre}</span>
-          <button onClick={logout} className="logout-btn">
-            Cerrar Sesión
-          </button>
+        <div className="header-content">
+          <h1>Mis Tareas</h1>
+          <p className="welcome-text">Hola, {user?.nombre}</p>
         </div>
+        <button onClick={logout} className="logout-btn" title="Cerrar Sesión">
+          <LogOutIcon size={20} />
+          <span>Salir</span>
+        </button>
       </div>
 
-      {error && <div className="error-message">{error}</div>}
-
-      <form onSubmit={handleCreateTask} className="task-form">
-        <h3>Nueva Tarea</h3>
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="Título de la tarea"
-            value={titulo}
-            onChange={(e) => setTitulo(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <textarea
-            placeholder="Descripción (opcional)"
-            value={descripcion}
-            onChange={(e) => setDescripcion(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <select value={prioridad} onChange={(e) => setPrioridad(e.target.value)}>
-            <option value="baja">Baja</option>
-            <option value="media">Media</option>
-            <option value="alta">Alta</option>
-          </select>
-        </div>
-        <button type="submit" disabled={loading}>
-          {loading ? 'Creando...' : 'Crear Tarea'}
-        </button>
-      </form>
-
-      <div className="tasks-list">
-        <h3>Tareas ({tasks.length})</h3>
-        {tasks.length === 0 ? (
-          <p className="no-tasks">No tienes tareas. ¡Crea una nueva!</p>
-        ) : (
-          tasks.map((task) => (
-            <div key={task._id} className={`task-item ${task.completada ? 'completed' : ''}`}>
-              <div className="task-content">
-                <input
-                  type="checkbox"
-                  checked={task.completada}
-                  onChange={() => handleToggleComplete(task)}
-                />
-                <div className="task-details">
-                  <h4>{task.titulo}</h4>
-                  {task.descripcion && <p>{task.descripcion}</p>}
-                  <span className={`priority ${task.prioridad}`}>{task.prioridad}</span>
-                </div>
+      <div className="tasks-content">
+        <div className="task-form-card">
+          <h3>Nueva Tarea</h3>
+          {error && <div className="error-message">{error}</div>}
+          <form onSubmit={handleCreateTask}>
+            <div className="form-group">
+              <input
+                type="text"
+                placeholder="¿Qué tienes pendiente?"
+                value={titulo}
+                onChange={(e) => setTitulo(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <textarea
+                placeholder="Descripción (opcional)"
+                value={descripcion}
+                onChange={(e) => setDescripcion(e.target.value)}
+              />
+            </div>
+            <div className="form-row">
+              <div className="form-group select-group">
+                <select value={prioridad} onChange={(e) => setPrioridad(e.target.value)}>
+                  <option value="baja">Prioridad Baja</option>
+                  <option value="media">Prioridad Media</option>
+                  <option value="alta">Prioridad Alta</option>
+                </select>
               </div>
-              <button
-                onClick={() => handleDeleteTask(task._id)}
-                className="delete-btn"
-              >
-                Eliminar
+              <button type="submit" disabled={loading} className="create-btn">
+                {loading ? <span className="loader"></span> : <PlusIcon size={20} />}
+                {loading ? 'Creando...' : 'Crear'}
               </button>
             </div>
-          ))
-        )}
+          </form>
+        </div>
+
+        <div className="tasks-list-section">
+          <h3>Tu Lista ({tasks.length})</h3>
+          <div className="tasks-list">
+            {tasks.length === 0 ? (
+              <div className="no-tasks">
+                <div className="empty-state-icon">📝</div>
+                <p>No tienes tareas pendientes.</p>
+                <span>¡Agrega una nueva arriba!</span>
+              </div>
+            ) : (
+              tasks.map((task) => (
+                <div key={task._id} className={`task-item ${task.completada ? 'completed' : ''}`}>
+                  <button
+                    className={`status-btn ${task.completada ? 'checked' : ''}`}
+                    onClick={() => handleToggleComplete(task)}
+                    title={task.completada ? "Marcar como pendiente" : "Marcar como completada"}
+                  >
+                    {task.completada ? <CheckCircleIcon size={24} /> : <div className="unchecked-circle"></div>}
+                  </button>
+
+                  <div className="task-details">
+                    <h4>{task.titulo}</h4>
+                    {task.descripcion && <p>{task.descripcion}</p>}
+                    <span className={`priority-badge ${task.prioridad}`}>{task.prioridad}</span>
+                  </div>
+
+                  <button
+                    onClick={() => handleDeleteTask(task._id)}
+                    className="delete-icon-btn"
+                    title="Eliminar tarea"
+                  >
+                    <TrashIcon size={20} />
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
