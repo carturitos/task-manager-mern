@@ -43,7 +43,7 @@ export const getTaskById = async (req: Request, res: Response): Promise<void> =>
     const { id } = req.params;
     const userId = (req as any).userId;
 
-    const task = await Task.findById(id).populate('usuario', 'nombre email');
+    const task = await Task.findById(id);
     if (!task) {
       res.status(404).json({ message: 'Tarea no encontrada' });
       return;
@@ -54,7 +54,8 @@ export const getTaskById = async (req: Request, res: Response): Promise<void> =>
       return;
     }
 
-    res.status(200).json(task);
+    const populatedTask = await task.populate('usuario', 'nombre email');
+    res.status(200).json(populatedTask);
   } catch (error) {
     if (error instanceof Error) {
       res.status(500).json({ message: error.message });
