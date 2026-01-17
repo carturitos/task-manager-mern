@@ -262,6 +262,7 @@ Authorization: Bearer <TOKEN>
 - **Framework**: Jest + Supertest + MongoDB Memory Server para pruebas de integración.
 - **Cobertura**: `npm run test:coverage` genera reportes en `backend/coverage`.
 - **Casos cubiertos**: Autenticación (registro, login, perfil, protección JWT) y CRUD completo de tareas con validación de permisos.
+- **Revisión continua**: Cada nueva funcionalidad debe abrir un PR para que los tests se ejecuten en CI y el equipo valide los cambios antes de fusionar.
 
 ### Cómo ejecutar localmente
 
