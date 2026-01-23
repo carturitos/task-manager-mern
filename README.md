@@ -543,7 +543,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Author
 
-**carturitos** - [GitHub Profile](https://github.com/carturitos)
+**Samuel Gutiérrez Oliva** - Full Stack Developer
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Samuel_Gutiérrez-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/samuel-guti%C3%A9rrez-oliva-a5866a317/)
+[![GitHub](https://img.shields.io/badge/GitHub-carturitos-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/carturitos)
+[![Portfolio](https://img.shields.io/badge/Portfolio-Projects-4CAF50?style=for-the-badge&logo=google-chrome&logoColor=white)](https://github.com/carturitos?tab=repositories)
 
 ---
 
