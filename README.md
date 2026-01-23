@@ -1,235 +1,390 @@
-# Task Manager MERN Stack
+# Task Manager - MERN Stack Application
 
-Un aplicativo web de gestión de tareas completo construido con el stack MERN (MongoDB, Express, React, Node.js). Permite a los usuarios crear, leer, actualizar y eliminar tareas con autenticación segura mediante JWT y bcrypt.
+[![MongoDB](https://img.shields.io/badge/MongoDB-7.0-green?logo=mongodb)](https://www.mongodb.com/)
+[![Express.js](https://img.shields.io/badge/Express.js-4.x-blue?logo=express)](https://expressjs.com/)
+[![React](https://img.shields.io/badge/React-18-blue?logo=react)](https://react.dev/)
+[![Node.js](https://img.shields.io/badge/Node.js-20-green?logo=node.js)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-blue?logo=docker)](https://www.docker.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-## 🚀 Características
+Full-stack task management application built with the MERN stack (MongoDB, Express.js, React, Node.js). Features secure JWT authentication, password recovery via email, and comprehensive CRUD operations with TypeScript backend implementation.
 
-- ✅ **Autenticación segura** - Registro e inicio de sesión con JWT y bcrypt
-- ✅ **Recuperación de contraseña** - Sistema de recuperación vía email con tokens seguros
-- ✅ **Gestión de tareas** - CRUD completo (Crear, Leer, Actualizar, Eliminar)
-- ✅ **Rutas protegidas** - Solo usuarios autenticados pueden acceder
-- ✅ **Prioridades** - Tareas con niveles de prioridad (baja, media, alta)
-- ✅ **Marcar completadas** - Marcar tareas como completadas
-- ✅ **TypeScript** - Backend en TypeScript para mayor seguridad de tipos
-- ✅ **Responsive Design** - Diseño adaptable para móvil y desktop
-- ✅ **UI Moderna** - Interfaz con iconos SVG, glassmorphism y animaciones suaves
+## Features
 
-## 📋 Requisitos Previos
+### Security & Authentication
+- **JWT-based authentication** with bcrypt password hashing
+- **Password recovery system** with secure token-based email verification
+- **Protected routes** with middleware authorization
+- **Token expiration management** (7-day validity)
 
-- Node.js >= 18
-- npm o yarn
-- MongoDB Atlas cuenta (gratuita)
-- Git
+### Task Management
+- **Complete CRUD operations** for task entities
+- **Priority levels** (low, medium, high)
+- **Task completion tracking**
+- **User-scoped data** - users can only access their own tasks
 
-## 🛠️ Instalación
+### Technical Implementation
+- **TypeScript backend** for type safety and improved developer experience
+- **RESTful API design** following industry best practices
+- **Responsive UI** optimized for desktop and mobile devices
+- **Modern design patterns** including glassmorphism and smooth animations
+- **Comprehensive test coverage** with Jest and Supertest
+- **CI/CD pipeline** with GitHub Actions
+- **Docker containerization** with multi-stage builds and Docker Compose orchestration
 
-### 1. Clonar el repositorio
+## Prerequisites
+
+### Required
+- **Node.js** >= 20.x (for Vite compatibility)
+- **npm** >= 9.x or **yarn** >= 1.22.x
+- **Git** for version control
+
+### Optional (Choose One)
+- **Docker Desktop** - Recommended for easy setup and deployment
+- **MongoDB Atlas** account (free tier) - If running without Docker
+- **Gmail account** with App Password - For email functionality (optional)
+
+> **Note**: Email functionality requires SMTP configuration. For development/testing, you can use services like [Mailtrap](https://mailtrap.io/) or skip email features.
+
+## Installation & Setup
+
+### 1. Clone Repository
 
 ```bash
 git clone https://github.com/carturitos/task-manager-mern.git
 cd task-manager-mern
 ```
 
-### 2. Configurar Backend
+### 2. Backend Configuration
 
 ```bash
 cd backend
 
-# Instalar dependencias
+# Install dependencies
 npm install
 
-# Crear archivo .env
+# Create environment configuration file
 cat > .env << EOF
 PORT=5000
-MONGO_URI=tu_conexion_mongodb_aqui
-JWT_SECRET=tu_clave_secreta_muy_larga_aqui
-SMTP_EMAIL=tu_email@gmail.com
-SMTP_PASSWORD=tu_app_password_de_gmail
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secure_jwt_secret_key_min_32_characters
+SMTP_EMAIL=your_email@gmail.com
+SMTP_PASSWORD=your_gmail_app_password
 FRONTEND_URL=http://localhost:5173
 EOF
 
-# Iniciar servidor
+# Start development server
 npm run dev
 ```
 
-### 3. Configurar Frontend
+### 3. Frontend Configuration
 
 ```bash
 cd ../frontend
 
-# Instalar dependencias
+# Install dependencies
 npm install
 
-# Iniciar cliente
+# Start development server
 npm run dev
 ```
 
-## 🌍 URLs de Acceso
+## 🐳 Docker Setup (Recommended)
 
-- **Frontend**: http://localhost:5173
-- **Backend API**: http://localhost:5000/api
-- **MongoDB**: Conectado a Atlas
+### Quick Start with Docker Compose
 
-## 📁 Estructura del Proyecto
+The easiest way to run the entire application stack:
+
+```bash
+# Clone repository
+git clone https://github.com/carturitos/task-manager-mern.git
+cd task-manager-mern
+
+# Copy environment file
+cp .env.docker.example .env
+
+# Edit .env and add your credentials
+# JWT_SECRET, SMTP_EMAIL, SMTP_PASSWORD
+
+# Start all services (MongoDB, Backend, Frontend)
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop all services
+docker-compose down
+
+# Stop and remove volumes (clean slate)
+docker-compose down -v
+```
+
+**Access the application:**
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:5000/api
+- MongoDB: localhost:27017
+
+### Development Mode with Docker
+
+For development with hot reload:
+
+```bash
+# Start development environment
+docker-compose -f docker-compose.dev.yml up
+
+# Rebuild after dependency changes
+docker-compose -f docker-compose.dev.yml up --build
+
+# Stop development environment
+docker-compose -f docker-compose.dev.yml down
+```
+
+### Individual Docker Commands
+
+```bash
+# Build images
+docker-compose build
+
+# Build without cache
+docker-compose build --no-cache
+
+# View running containers
+docker-compose ps
+
+# Execute commands in containers
+docker-compose exec backend npm test
+docker-compose exec mongodb mongosh
+
+# View container logs
+docker-compose logs backend
+docker-compose logs frontend
+docker-compose logs mongodb
+```
+
+### Docker Image Sizes
+
+Optimized multi-stage builds:
+- **Backend**: ~180MB (Alpine-based)
+- **Frontend**: ~25MB (Nginx Alpine)
+- **MongoDB**: ~700MB (Official image)
+
+> **💡 Production Deployment**: See [DEPLOYMENT.md](DEPLOYMENT.md) for free deployment options using Railway, Render, Fly.io, and more.
+
+
+## Application URLs
+
+| Service        | URL                          | Description                    |
+| -------------- | ---------------------------- | ------------------------------ |
+| Frontend       | http://localhost:5173        | React development server       |
+| Backend API    | http://localhost:5000/api    | Express REST API               |
+| Database       | MongoDB Atlas                | Cloud-hosted database instance |
+
+## Project Structure
 
 ```
 task-manager-mern/
 ├── backend/
 │   ├── src/
 │   │   ├── config/
-│   │   │   └── db.ts           # Conexión a MongoDB
+│   │   │   └── db.ts                  # MongoDB connection configuration
 │   │   ├── controllers/
-│   │   │   ├── userController.ts
-│   │   │   └── taskController.ts
+│   │   │   ├── userController.ts      # Authentication & password recovery logic
+│   │   │   └── taskController.ts      # Task CRUD operations
 │   │   ├── middleware/
-│   │   │   └── authMiddleware.ts
+│   │   │   └── authMiddleware.ts      # JWT validation middleware
 │   │   ├── models/
-│   │   │   ├── User.ts
-│   │   │   └── Task.ts
+│   │   │   ├── User.ts                # User schema with reset tokens
+│   │   │   └── Task.ts                # Task schema
 │   │   ├── routes/
-│   │   │   ├── userRoutes.ts
-│   │   │   └── taskRoutes.ts
-│   │   └── server.ts
-│   ├── .env
+│   │   │   ├── userRoutes.ts          # Authentication endpoints
+│   │   │   └── taskRoutes.ts          # Task endpoints
+│   │   ├── utils/
+│   │   │   └── sendEmail.ts           # Email service utility
+│   │   ├── tests/                     # Integration tests
+│   │   ├── app.ts                     # Express application setup
+│   │   └── server.ts                  # Application entry point
+│   ├── .env                           # Environment variables
 │   ├── package.json
 │   └── tsconfig.json
 │
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
-│   │   │   └── ProtectedRoute.jsx
+│   │   │   └── ProtectedRoute.jsx     # Route protection HOC
 │   │   ├── context/
-│   │   │   └── AuthContext.jsx
+│   │   │   └── AuthContext.jsx        # Authentication state management
 │   │   ├── pages/
-│   │   │   ├── Login.jsx
-│   │   │   ├── Register.jsx
-│   │   │   └── Tasks.jsx
+│   │   │   ├── Login.jsx              # Login page
+│   │   │   ├── Register.jsx           # Registration page
+│   │   │   ├── ForgotPassword.jsx     # Password recovery request
+│   │   │   ├── ResetPassword.jsx      # Password reset with token
+│   │   │   └── Tasks.jsx              # Task management dashboard
 │   │   ├── services/
-│   │   │   └── api.js          # Configuración de Axios
+│   │   │   └── api.js                 # Axios HTTP client configuration
 │   │   ├── styles/
-│   │   │   ├── Auth.css
-│   │   │   └── Tasks.css
-│   │   ├── App.jsx
-│   │   └── main.jsx
+│   │   │   ├── Auth.css               # Authentication pages styling
+│   │   │   └── Tasks.css              # Dashboard styling
+│   │   ├── App.jsx                    # Route configuration
+│   │   ├── App.css
+│   │   ├── index.css                  # Global styles
+│   │   └── main.jsx                   # React entry point
 │   ├── package.json
 │   └── vite.config.js
 │
 └── README.md
 ```
 
-## 🔌 API Endpoints
+## API Endpoints
 
-### Autenticación (Usuario)
+### Authentication
 
-| Método | Endpoint                           | Descripción                      | Autenticación |
-| ------ | ---------------------------------- | -------------------------------- | ------------- |
-| POST   | `/api/users/register`              | Registrar nuevo usuario          | No            |
-| POST   | `/api/users/login`                 | Iniciar sesión                   | No            |
-| GET    | `/api/users/profile`               | Obtener perfil del usuario       | ✅ JWT        |
-| POST   | `/api/users/forgotpassword`        | Solicitar recuperación de contraseña | No        |
-| PUT    | `/api/users/resetpassword/:token`  | Resetear contraseña con token    | No            |
+| Method | Endpoint                                | Description                              | Auth Required |
+| ------ | --------------------------------------- | ---------------------------------------- | ------------- |
+| POST   | `/api/users/register`                   | Register new user account                | No            |
+| POST   | `/api/users/login`                      | Authenticate user and issue JWT          | No            |
+| GET    | `/api/users/profile`                    | Retrieve authenticated user profile      | ✅ JWT        |
+| POST   | `/api/users/forgotpassword`             | Request password reset email             | No            |
+| PUT    | `/api/users/resetpassword/:resettoken`  | Reset password using valid token         | No            |
 
-### Tareas
+### Tasks
 
-| Método | Endpoint         | Descripción              | Autenticación |
-| ------ | ---------------- | ------------------------ | ------------- |
-| POST   | `/api/tasks`     | Crear nueva tarea        | ✅ JWT        |
-| GET    | `/api/tasks`     | Obtener todas las tareas | ✅ JWT        |
-| GET    | `/api/tasks/:id` | Obtener tarea por ID     | ✅ JWT        |
-| PUT    | `/api/tasks/:id` | Actualizar tarea         | ✅ JWT        |
-| DELETE | `/api/tasks/:id` | Eliminar tarea           | ✅ JWT        |
+| Method | Endpoint         | Description                      | Auth Required |
+| ------ | ---------------- | -------------------------------- | ------------- |
+| POST   | `/api/tasks`     | Create new task                  | ✅ JWT        |
+| GET    | `/api/tasks`     | Retrieve all user tasks          | ✅ JWT        |
+| GET    | `/api/tasks/:id` | Retrieve specific task by ID     | ✅ JWT        |
+| PUT    | `/api/tasks/:id` | Update existing task             | ✅ JWT        |
+| DELETE | `/api/tasks/:id` | Delete task                      | ✅ JWT        |
 
-## 💻 Tecnologías Utilizadas
+## Frontend Routes
+
+| Route                            | Component         | Description                              | Protected |
+| ------------------------------- | ------------------ | ---------------------------------------- | --------- |
+| `/`                             | Navigate           | Redirects to `/tasks`                    | No        |
+| `/login`                        | Login              | User authentication page                 | No        |
+| `/register`                     | Register           | New user registration                    | No        |
+| `/forgotpassword`               | ForgotPassword     | Password recovery request form           | No        |
+| `/resetpassword/:resettoken`    | ResetPassword      | Password reset with email token          | No        |
+| `/tasks`                        | Tasks              | Task management dashboard                | ✅ JWT    |
+
+## Technology Stack
 
 ### Backend
 
-- **Node.js** - Entorno de ejecución
-- **Express.js** - Framework web
-- **TypeScript** - Lenguaje tipado
-- **MongoDB** - Base de datos NoSQL
-- **Mongoose** - ODM para MongoDB
-- **JWT** - JSON Web Tokens para autenticación
-- **bcryptjs** - Hash de contraseñas
-- **CORS** - Control de acceso
+- **Node.js** - JavaScript runtime environment
+- **Express.js** - Web application framework
+- **TypeScript** - Statically typed JavaScript superset
+- **MongoDB** - NoSQL document database
+- **Mongoose** - MongoDB object modeling (ODM)
+- **JWT (jsonwebtoken)** - Stateless authentication tokens
+- **bcryptjs** - Password hashing algorithm
+- **nodemailer** - Email delivery service integration
+- **CORS** - Cross-origin resource sharing middleware
+- **Jest** - JavaScript testing framework
+- **Supertest** - HTTP assertion library
 
 ### Frontend
 
-- **React 18** - Librería de UI
-- **Vite** - Bundler rápido
-- **React Router** - Enrutamiento
-- **Axios** - Cliente HTTP
-- **Context API** - Gestión de estado
+- **React 18** - Component-based UI library
+- **Vite** - Next-generation frontend build tool
+- **React Router v6** - Client-side routing
+- **Axios** - Promise-based HTTP client
+- **Context API** - React state management
 
-## 🚀 Scripts Disponibles
+## Available Scripts
 
 ### Backend
 
 ```bash
-# Modo desarrollo (con TypeScript en tiempo real)
+# Development mode with hot reload (ts-node-dev)
 npm run dev
 
-# Compilar TypeScript a JavaScript
+# Compile TypeScript to JavaScript
 npm run build
 
-# Ejecutar versión de producción
+# Production mode (compiled JavaScript)
 npm start
 
-# Ejecutar pruebas (modo único)
+# Run test suite
 npm test
 
-# Ejecutar pruebas en watch mode
+# Run tests in watch mode
 npm run test:watch
 
-# Generar reporte de cobertura
+# Generate coverage report
 npm run test:coverage
 ```
 
 ### Frontend
 
 ```bash
-# Modo desarrollo
+# Development server with HMR
 npm run dev
 
-# Compilar para producción
+# Production build
 npm run build
 
-# Vista previa de producción
+# Preview production build locally
 npm run preview
 ```
 
-## 🔐 Autenticación
+## Authentication Flow
 
-### Flujo de Autenticación
+### JWT Authentication Process
 
-1. **Registro**: El usuario se registra con nombre, email y contraseña
-2. **Hash de Contraseña**: bcryptjs encripta la contraseña antes de guardarla
-3. **Generación de JWT**: Al login, el servidor genera un token JWT que expira en 7 días
-4. **Almacenamiento**: El token se guarda en localStorage
-5. **Protección**: Cada petición a rutas protegidas incluye el token en el header
-6. **Validación**: El middleware `authMiddleware` verifica la validez del token
+1. **User Registration**: Client submits credentials (name, email, password)
+2. **Password Hashing**: Server hashes password using bcrypt (10 salt rounds)
+3. **JWT Generation**: Upon successful login, server generates JWT with 7-day expiration
+4. **Token Storage**: Client stores JWT in localStorage
+5. **Request Authorization**: Protected endpoints require `Authorization: Bearer <token>` header
+6. **Token Validation**: `authMiddleware` verifies JWT signature and expiration on each request
 
-### Headers Requeridos
+### Required Headers for Protected Routes
 
-```
+```http
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 
-## 📝 Ejemplo de Uso
+## Password Recovery System
 
-### 1. Registrarse
+### Recovery Workflow
 
-```bash
+1. **Recovery Request**: User submits email address via `/forgotpassword` endpoint
+2. **Token Generation**: Server generates cryptographically secure token (SHA-256 hash) with 1-hour TTL
+3. **Email Delivery**: System sends recovery email containing unique reset link
+4. **Token Validation**: User clicks link, accessing `/resetpassword/:resettoken` with token parameter
+5. **Password Update**: User submits new password; server validates token and updates credentials
+6. **Token Cleanup**: Reset token is removed from database after successful password update
+
+### Email Configuration
+
+Configure the following environment variables for email functionality:
+
+```env
+SMTP_EMAIL=your_email@gmail.com
+SMTP_PASSWORD=your_gmail_app_password
+FRONTEND_URL=http://localhost:5173
+```
+
+> **Note**: For Gmail, generate an App Password from your Google Account settings. Do not use your primary account password.
+
+## API Usage Examples
+
+### 1. User Registration
+
+```http
 POST http://localhost:5000/api/users/register
 Content-Type: application/json
 
 {
-  "nombre": "Juan Pérez",
-  "email": "juan@ejemplo.com",
-  "password": "password123"
+  "nombre": "John Doe",
+  "email": "john.doe@example.com",
+  "password": "SecurePass123!"
 }
 ```
 
-**Respuesta:**
+**Response:**
 
 ```json
 {
@@ -237,103 +392,160 @@ Content-Type: application/json
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
   "user": {
     "id": "67a123...",
-    "nombre": "Juan Pérez",
-    "email": "juan@ejemplo.com"
+    "nombre": "John Doe",
+    "email": "john.doe@example.com"
   }
 }
 ```
 
-### 2. Crear Tarea
+### 2. Create Task
 
-```bash
+```http
 POST http://localhost:5000/api/tasks
-Authorization: Bearer <TOKEN>
+Authorization: Bearer <JWT_TOKEN>
 Content-Type: application/json
 
 {
-  "titulo": "Comprar groceries",
-  "descripcion": "Leche, pan, huevos",
-  "prioridad": "media"
+  "titulo": "Implement authentication",
+  "descripcion": "Add JWT-based authentication to API",
+  "prioridad": "alta"
 }
 ```
 
-### 3. Obtener Tareas
+### 3. Retrieve All Tasks
 
-```bash
+```http
 GET http://localhost:5000/api/tasks
-Authorization: Bearer <TOKEN>
+Authorization: Bearer <JWT_TOKEN>
 ```
 
-## 🧪 Testing Profesional
+### 4. Request Password Reset
 
-- **Framework**: Jest + Supertest + MongoDB Memory Server para pruebas de integración.
-- **Cobertura**: `npm run test:coverage` genera reportes en `backend/coverage`.
-- **Casos cubiertos**: Autenticación (registro, login, perfil, protección JWT) y CRUD completo de tareas con validación de permisos.
-- **Revisión continua**: Cada nueva funcionalidad debe abrir un PR para que los tests se ejecuten en CI y el equipo valide los cambios antes de fusionar.
+```http
+POST http://localhost:5000/api/users/forgotpassword
+Content-Type: application/json
 
-### Cómo ejecutar localmente
+{
+  "email": "john.doe@example.com"
+}
+```
+
+**Response:**
+
+```json
+{
+  "message": "Email de recuperación enviado"
+}
+```
+
+### 5. Reset Password with Token
+
+```http
+PUT http://localhost:5000/api/users/resetpassword/abc123def456...
+Content-Type: application/json
+
+{
+  "password": "NewSecurePass456!"
+}
+```
+
+**Response:**
+
+```json
+{
+  "message": "Contraseña actualizada exitosamente"
+}
+```
+
+## Testing
+
+### Test Suite Overview
+
+- **Framework**: Jest + Supertest + MongoDB Memory Server for integration testing
+- **Coverage Reports**: Generate with `npm run test:coverage` (output in `backend/coverage/`)
+- **Test Coverage**: 
+  - Authentication endpoints (registration, login, profile, JWT protection)
+  - Complete task CRUD operations with authorization validation
+  - Password recovery workflow
+- **CI Integration**: Automated test execution on every push and pull request
+
+### Running Tests Locally
 
 ```bash
 cd backend
 npm install
-npm test
+npm test                # Run test suite
+npm run test:watch      # Watch mode for development
+npm run test:coverage   # Generate coverage report
 ```
 
-## 🔁 Integración Continua (CI/CD)
+## Continuous Integration & Deployment
 
-- **GitHub Actions**: workflow `Backend Tests` ejecuta automáticamente `npm test` en cada `push` y `pull_request` a `main`.
-- **Artefactos**: el reporte de cobertura se adjunta como artefacto para su revisión.
-- **Ramas protegidas**: se recomienda exigir que el workflow pase antes de aprobar un PR, reforzando el proceso descrito en **Flujo de aprobación**.
+### GitHub Actions Workflow
 
-## 🐛 Solución de Problemas
+- **Automated Testing**: `Backend Tests` workflow executes on every `push` and `pull_request` to `main`
+- **Coverage Artifacts**: Test coverage reports are uploaded as workflow artifacts
+- **Branch Protection**: Recommended to require passing CI checks before merging PRs
+- **Quality Gates**: Enforce code quality standards through automated testing
 
-### Problema: CORS Error
+## Troubleshooting
 
-**Solución**: Verifica que el frontend y backend estén corriendo en puertos diferentes (5173 y 5000).
+### CORS Errors
 
-### Problema: MongoDB Connection Error
+**Issue**: Cross-origin request blocked
 
-**Solución**:
+**Solution**: Ensure frontend (port 5173) and backend (port 5000) are running on different ports. Verify CORS middleware is properly configured in `backend/src/app.ts`.
 
-1. Verifica tu `MONGO_URI` en `.env`
-2. Asegúrate de agregar tu IP a MongoDB Atlas (Network Access)
-3. Verifica que el usuario y contraseña sean correctos
+### MongoDB Connection Failures
 
-### Problema: JWT Expired
+**Issue**: Unable to connect to MongoDB Atlas
 
-**Solución**: El token expira cada 7 días. Haz login nuevamente para obtener un nuevo token.
+**Solutions**:
 
-## 📚 Recursos Útiles
+1. Verify `MONGO_URI` in `.env` file
+2. Add your IP address to MongoDB Atlas Network Access whitelist
+3. Confirm database user credentials are correct
+4. Check network connectivity and firewall settings
 
-- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-- [Express.js Docs](https://expressjs.com/)
-- [React Docs](https://react.dev)
+### JWT Token Expiration
+
+**Issue**: Authentication fails with expired token
+
+**Solution**: JWT tokens expire after 7 days. Re-authenticate to obtain a new token. Consider implementing refresh token mechanism for production environments.
+
+## Resources
+
+- [MongoDB Atlas Documentation](https://www.mongodb.com/cloud/atlas)
+- [Express.js Official Documentation](https://expressjs.com/)
+- [React Documentation](https://react.dev)
 - [JWT Introduction](https://jwt.io/introduction)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+- [Jest Testing Framework](https://jestjs.io/)
+- [Nodemailer Documentation](https://nodemailer.com/)
 
-## 🤝 Contribuciones
+## Contributing
 
-Las contribuciones son bienvenidas. Para cambios importantes:
+Contributions are welcome! To contribute to this project:
 
-1. Fork el repositorio
-2. Crea una rama (`git checkout -b feature/AmazingFeature`)
-3. Commit los cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/NewFeature`)
+3. Commit your changes (`git commit -m 'Add NewFeature'`)
+4. Push to the branch (`git push origin feature/NewFeature`)
+5. Open a Pull Request
 
-### ✅ Flujo de aprobación
+### Pull Request Guidelines
 
-> Para este proyecto, todos los Pull Requests deben ser revisados y aprobados antes de fusionarse en `main`. Si estás probando tus reglas de seguridad, crea un cambio pequeño, abre el PR y solicita la aprobación correspondiente para validar el flujo.
+> All Pull Requests must be reviewed and approved before merging into `main`. Ensure all tests pass and code coverage meets project standards. Follow the existing code style and include appropriate test coverage for new features.
 
-## 📄 Licencia
+## License
 
-Este proyecto está bajo la licencia MIT.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👨‍💻 Autor
+## Author
 
-**carturitos** - [GitHub](https://github.com/carturitos)
+**carturitos** - [GitHub Profile](https://github.com/carturitos)
 
 ---
 
-**Creado**: Enero 2026  
-**Última actualización**: Enero 2026
+**Created**: January 2026  
+**Last Updated**: January 2026
