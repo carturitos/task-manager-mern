@@ -15,4 +15,8 @@ app.get('/api/test', (_req, res) => {
   res.json({ message: '¡Servidor funcionando correctamente!' });
 });
 
+app.get('/api/health', (_req, res) => {
+  res.status(200).json({ status: 'healthy', timestamp: new Date().toISOString() });
+});
+
 export default app;
